@@ -1,0 +1,14 @@
+/*this is the scale screen adapting*/
+@media (min-width:768px){
+    /*set the width to 50%*/
+    .news-input{
+        width: 50%;
+    }
+}
+/*define the before status */
+body::before{
+    /*block display*/
+    display: block;
+    content: "";
+    height: 56px;
+}

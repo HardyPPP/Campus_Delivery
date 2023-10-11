@@ -1,0 +1,145 @@
+{% extends 'baseForUserAndUnlogin.html' %}
+<!--extends the base-->
+<!DOCTYPE html>
+<html lang="en">
+{% block head %}
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--lead in the css and jquery-->
+    <link rel="stylesheet" href="{{ url_for("static", filename = "css/bootstrap5.css") }}">
+    <script src="{{ url_for('static', filename = 'jquery/jquery.js') }}"></script>
+{% endblock %}
+{% block body %}
+    <!--title of the table-->
+<section class=" bg-primary">
+    <div class="container">
+        <div class="row align-items-center justify-content-between">
+            <div class="col-md p-5 lead text-light">
+                <h1 class="text-center">Order Details</h1>
+            </div>
+        </div>
+    </div>
+</section>
+    <!--table present the data-->
+<section class="p-6 m-5">
+    <div class="container ">
+        <div class="heading-line"></div>
+        <table class="table mt-6 table-striped table-hover align-middle"><!--strip style,middle alignment-->
+            <thead class="thead-dark">
+            <tr>
+                <!--title for the table-->
+                <th scope="col">Order ID</th>
+                <th scope="col">Item Name</th>
+                <th scope="col">Shop</th>
+                <th scope="col">Price</th>
+                <th scope="col">Edition</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!--iterate the order details and place each information to the table-->
+            {% for detail in order.detail %}
+                <tr id="tr2{{ detail.detail_id }}">
+                    <td><h4>{{ detail.order_id }}</h4></td>
+                    <td><h4>{{ detail.commodity.commodity_name }}</h4></td>
+                    <td><h4>{{ detail.commodity.shop.shop_name }}</h4></td>
+                    <td><h4>{{ detail.commodity.commodity_price }}$</h4></td>
+                    <td>
+                    <!--each of the btn is given an unique id to identify the detail -->
+                        <div class="form" method="post">
+                            <input type="hidden" class="form-control" id="delete_detail{{ detail.detail_id }}"
+                                   name=shopOrder2
+                                   value="{{ detail.detail_id }}">
+                            {% if order.status==0 %}
+                                <!--if the order is not submitted, delete func would be provided-->
+                                <!--using ajax to implement the delete func-->
+                                <button class="btn-danger btn mt-2" type="submit"
+                                        onclick="bindDeleteDetailButtonClick('{{ detail.detail_id }}')">Delete
+                                </button>
+                            {% endif %}
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+<!--if the status is 0(order haven't be uploaded),a submit func is provided-->
+    {% if order.status==0 %}
+        <section>
+            <div class="container">
+                <div class="form" method="post">
+                    <input type="hidden" class="form-control" id="order_id2{{ order.order_id }}" name=order_id
+                           value="{{ order.order_id }}">
+                    <button class="btn-danger btn mt-2" style="float: right" type="submit"
+                            onclick="bindSubmitButtonClick('{{ order.order_id }}')">submit
+                    </button>
+                </div>
+            </div>
+        </section>
+    {% endif %}
+<!--by default, a back button is provided -->
+    <section>
+        <div class="container">
+            <form method="post" action="{{ url_for('order.show_my_order') }}">
+                <input type="hidden" class="form-control" id="shopOrder" name=shopOrder value="">
+                <button type="submit" style="float: right" class="mr-5 btn btn-warning btn-lg btn-block">Back
+                </button>
+            </form>
+        </div>
+    </section>
+
+
+</section>
+<script type="text/javascript">
+    function bindSubmitButtonClick(str) {
+        // submit the finished order
+        var order = $("#" + "order_id2" + str).val();
+        // get the order id
+        $.ajax({
+            url: "/order/submit",
+            method: "POST",
+            data: {
+                "order_id2": order
+            },
+            // pass it to order.py
+            success: function (res) {
+                var code = res['code'];
+                if (code === 200) {
+                    // if successfully submitted
+                    alert("submit successfully");
+                    window.location.href="{{ url_for('order.show_my_order') }}"
+                } else {
+                    alert(res['message']);
+                }
+            }
+        });
+    }
+
+    function bindDeleteDetailButtonClick(str) {
+        // delete a piece of order content
+        var detail = $("#" + "delete_detail" + str).val();
+        // get the detail id
+        $.ajax({
+            url: "/order/deleteDetail",
+            method: "POST",
+            data: {
+                "detail_id": detail
+            },
+            // pass it to order.py
+            success: function (res) {
+                var code = res['code'];
+                if (code === 200) {
+                    // if successfully deleted
+                    alert("delete successfully");
+                    // update the table
+                    $('#tr2' + str).html('');
+                } else {
+                    alert(res['message']);
+                }
+            }
+        });
+    }
+
+</script>
+{% endblock %}
+</html>

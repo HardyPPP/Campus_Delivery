@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Title</title>
+    <link rel="stylesheet" href="{{ url_for("static", filename = "css/styleForM.css") }}">
+    <link rel="stylesheet" href="../static/css/bootstrap5.css">
+    <script src="{{ url_for('static', filename = 'jquery/jquery.js') }}"></script>
+
+</head>
+<body>
+<section>
+    <div class="container">
+        <div class="user singinBx">
+            <div class="imgBx"><img src="../static/Resource/提前点餐.svg" alt=""></div>
+            <div class="formBx">
+            <!--using form to deliver messages-->
+                <form action="{{ url_for("merchant.login") }}"  class="form" method="post">
+                    <h2>Sign In</h2>
+                    <input type="text" name="email" id="exampleInputEmail1" placeholder="Email">
+                    <input type="password" name="password" id="examplePassword1" placeholder="Password">
+                    <button type="submit" class="btn btn-primary"  id="merchantLogin" onclick="check1()">Submit
+                    </button><!--data detection,  js alert-->
+                    <p class="signup">Don't have an account ?<a href="#" onclick="
+                            toggleForm();">Sign Up.</a></p> <!--js switching the screen-->
+               <!--messages flesh alert-->
+                    {% for message in get_flashed_messages() %}
+                        <div>
+                            <div class="text-danger">{{ message }}</div>
+                        </div>
+                    {% endfor %}
+                </form>
+            </div>
+        </div>
+    <!--this part is for sign up-->
+        <div class="user singupBx">
+            <div class="formBx">
+                <!--form deliver to backend-->
+                <div class="form" method="post">
+                    <h2>Create an Account</h2>
+                    <input type="text" name="UserName" id="exampleUserName"  placeholder="Username">
+                    <input type="email" name="email" id="exampleInputEmail" placeholder="Email Address">
+                    <input type="text" name="phone_number" id="examplePhone" placeholder="phone number">
+                    <input type="password" name="password" id="exampleInputPassword1" placeholder="Create Password">
+                    <input type="password" name="passwordV" id="exampleInputPassword2" placeholder="Confirm Password">
+                    <input id="btn_signup" type="submit" name="" onclick="
+                            check2()" value="Sign up"><!--js alert, data validation-->
+                    <p class="signup">Already have an account ?<a href="#" onclick="
+                            toggleForm();">Sign In.</a></p><!--js screen switching-->
+                </div>
+            </div>
+            <div class="imgBx"><img src="/static/Resource/沐浴用品.svg" alt=""></div>
+        </div>
+    </div>
+</section>
+<script type="text/javascript">
+    function toggleForm() {
+        //js here is used to switch different screens (sign in and sign up)
+        var container = document.querySelector('.container');
+        //using toggle to hide/appear certain elements
+        container.classList.toggle('active')
+    }
+
+
+    function check1() {
+        //this function is used to giving alert due to the data validation
+        //get different variables
+        var user = $("#exampleInputEmail1").val();
+        var pwd = $("#examplePassword1").val();
+        var lenU = user.length;
+        var lenP = pwd.length;
+        //alarm according to certain conditions
+        if (lenU < 6) {
+            alert('incorrect email form');
+        }
+        if (lenP < 8 || lenP > 16) {
+            alert('password length should between 8 and 16');
+        }
+
+    }
+
+    function check2() {//this function is used to giving alert due to the data validation
+        //get different variables
+        // submit the finished order
+        var usernameO = document.getElementById('exampleUserName');
+        var username = $("#exampleUserName").val();
+        var email = $("#exampleInputEmail").val();
+        var phone = $("#examplePhone").val();
+        var pwd = $("#exampleInputPassword1").val();
+        var pwdV = $("#exampleInputPassword2").val();
+        // get the order id
+        $.ajax({
+            url: "/merchant/register",
+            method: "POST",
+            data: {
+                "email": email,
+                "password": pwd,
+                "passwordV": pwdV,
+                "UserName": username,
+                "phone_number": phone
+            },
+            // pass it to order.py
+            success: function (res) {
+                var code = res['code'];
+                if (code === "good") {
+                    // if successfully submitted
+                    alert("submit successfully");
+                } else if(code === "uidLength"){
+                    alert(code);
+                    //mark the wrong input
+                    $("#exampleUserName").css("background","red");
+                }else if(code === "pwdLength"){
+                    alert(code);
+                    //mark the wrong input
+                    $("#exampleInputPassword1").css("background","red");
+                }else if(code === "pwdDiffer"){
+                    alert(code);
+                    //mark the wrong input
+                    $("#exampleInputPassword2").css("background","red");
+                }else if(code === "emailError"){
+                    //mark the wrong input
+                    alert(code);
+                    $("#exampleInputEmail").css("background","red")
+                }else if(code === "phoneLength"){
+                    alert(code);
+                    //mark the wrong input
+                    $("#examplePhone").css("background","red");
+                }else if(code === "sameEmail"){
+                    alert(code);
+                    //mark the wrong input
+                    $("#exampleInputEmail").css("background","red")
+                }else if(code === "samePhone"){
+                    alert(code);
+                    //mark the wrong input
+                    $("#examplePhone").css("background","red");
+                }
+            }
+        });
+    }
+
+
+
+</script>
+
+</body>
+</html>

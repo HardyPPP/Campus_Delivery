@@ -1,0 +1,83 @@
+<!--To render the base-->
+{% extends "baseForUserAndUnlogin.html" %}
+<html lang="en">
+<head>
+    {% block head %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trial1</title>
+    <!--use the css file from css-->
+    <link rel="stylesheet" href="../static/css/bootstrap5.css">
+    <!--apply the base head-->
+    {% endblock head %}
+</head>
+{% block body %}
+<!--First Section is the overall intro of the application-->
+    <section class="p-5 bg-dark">
+        <!--use the container to control the margin of the content (ensure not the full screen but in limit area)-->
+        <div class="container">
+            <!--use the grid to control the layout of the two pieces (picture and text part)-->
+            <div class="row align-items-center justify-content-between">
+                <div class="col-md">
+                    <!--75% width height + responsive adjustment-->
+                    <img src="../static/Resource/移动购物.svg" class="img-fluid w-75">
+                </div>
+                <!--text part, padding 5 with light text and lead font-->
+                <div class="col-md p-5 lead text-light">
+                    <h2>View all the shops here</h2>
+                    <p class="lead text-light">
+                        <!--the class text warning for span label gives color to the text I want to remark-->
+                        Shops here includes both the <span class="text-warning">Hypostatic store</span> and the <span
+                            class="text-warning">Online store</span>. The Hypostatic shop is mainly the canteens and
+                        shops
+                        which is available on campus, where the online shop is mainly the shops that runs by the
+                        students.
+                        All the shops and commodities here has been tested and verified.
+                        <br>
+                    </p>
+                    <!--A Search function, providing with an input area (haven't implement the function yet)-->
+                    <form method="post" action="#">
+                    <div class="input-group ">
+                        <input type="text" class="form-control" placeholder="Search for Shop Name">
+                        <button class="btn btn-primary btn-primary">Search</button>
+                    </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+
+    </section>
+ <!--This section is the display of the shops in the database-->
+    <section class="p-5 bg-primary">
+        <div class="container">
+            <!--Here is to limit the number of card presenting in a line. Four cards are allowed in a single line-->
+            <div class="row row-cols-1 row-cols-md-4">
+                <!--use the variable 'shops' delivered from the backend and iterate through the shop-->
+                {% for shop in shops %}
+                    <div class="col mb-4">
+                        <div class="card">
+                            <img src="../static/Resource/06商品.png" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <!--In the iteration, post the name, location, merchants name to the card-->
+                                <h5 class="card-title text-center">{{ shop.shop_name }}</h5>
+                                <h6 class="card-subtitle text-center">{{ shop.shop_location }}</h6>
+                                <p class="card-text text-center"> {{ shop.merchant.merchants_name }}</p>
+                                <!--For each card, provide each card with a button to see the details of the shop.
+                                The hidden input records the shopID and could be delivered to the detail page to view the details of certain shop-->
+                                <!--using the form, We post the id of the certain shop to the next page-->
+                                <form action="{{ url_for("shop_display.display_commodities") }}" method="post">
+                                    <input type="hidden" class="form-control" id="shop_id" name=shop_id value="{{ shop.shop_id }}">
+                                    <button class="btn-primary btn mt-2" type="submit">See in details</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+        </div>
+    </section>
+{% endblock body %}
+</html>

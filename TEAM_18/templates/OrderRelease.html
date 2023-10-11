@@ -1,0 +1,102 @@
+{% extends "Base_for_Rider.html" %}
+<!DOCTYPE html>
+<html lang="en">
+{% block head %}
+    <meta charset="UTF-8">
+    <title>Fetch Your Order Here</title>
+    <link rel="stylesheet" href="{{ url_for("static", filename = "css/bootstrap5.css") }}">
+
+{% endblock %}
+{% block body %}
+    <section class="p-5 bg-dark">
+        <!--use the container to control the margin of the content (ensure not the full screen but in limit area)-->
+        <div class="container">
+            <!--use the grid to control the layout of the two pieces (picture and text part)-->
+            <div class="row align-items-center justify-content-between">
+                <div class="col-md">
+                    <!--75% width height + responsive adjustment-->
+                    <img src="/static/Resource/移动购物.svg" class="img-fluid w-50">
+                </div>
+                <!--text part, padding 5 with light text and lead font-->
+                <div class="col-md p-5 lead text-light">
+                    <h2>Welcome back,<span class="text-info">{{ g.userD.username }}</span></h2>
+                    <p class="lead text-light">
+                        <!--the class text warning for span label gives color to the text I want to remark-->
+                        Orders are released and displayed in the main page. You are able to <span class="text-warning">fetch the order</span>
+                        that you would like to deliver.
+                        Once you have fetched the order, please deliver the order <span
+                            class="text-warning">on time</span>.
+                        <br>
+                    </p>
+                    <!--A Search function, providing with an input area (haven't implement the function yet)-->
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="p-6 m-5">
+        <div class="container ">
+            <h1 class="text-center lead">Released order</h1>
+            <div class="heading-line"></div>
+            <table class="table mt-6 table-striped table-hover align-middle m-3">
+                <!--table, margin top, striped decoration, hover table and item aligned middle-->
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Order ID</th>
+                    <th scope="col">Customer Name</th>
+                    <th scope="col">Released time</th>
+                    <th scope="col">Location</th>
+                    <th scope="col">Handling</th>
+                </tr>
+                </thead>
+                <tbody>
+                <!--for loop and Jinjia2 to list the order of the logged shop, visiting databse-->
+                {% for order in orders %}
+                    <tr>
+                        <td><h4>{{ order.order_id }}</h4></td>
+                        <td><h4>{{ order.reciever_id }}</h4></td>
+                        <td><h4>{{ order.release_time }}</h4></td>
+                        <td><h4>{{ order.reciever.student_address }}</h4></td>
+                        <td>
+                            <form action="{{ url_for("order.view_1_detail") }}" method="post">
+                                <input type="hidden" class="form-control" id="order_id" name=order_id
+                                       value="{{ order.order_id }}">
+                                <button class="btn-danger btn mt-2" type="submit"
+                                >See Details
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+    </section>
+    <script type="text/javascript">
+        function bindTakeButtonClick(str) {
+            // delete this order
+            var order = $("#" + "order_id3" + str).val();
+            // find the order id
+            $.ajax({
+                url: "/order/order/delete",
+                method: "POST",
+                data: {
+                    "order_id": order
+                },
+                // pass this data to order.py to delete it
+                success: function (res) {
+                    var code = res['code'];
+                    if (code === 200) {
+                        // if successfully deleted
+                        alert('delete successfully-')
+                        // update the table
+                        $('#tr' + str).html('');
+                    } else {
+                        alert(res['message']);
+                    }
+                }
+            });
+        }
+    </script>
+{% endblock %}
+</html>

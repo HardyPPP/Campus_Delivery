@@ -1,0 +1,215 @@
+{% extends 'baseForUserAndUnlogin.html' %}
+<!--extend the base -->
+<!DOCTYPE html>
+<html lang="en">
+{% block head %}
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--use css and Jquery-->
+    <link rel="stylesheet" href="{{ url_for("static", filename = "css/bootstrap5.css") }}">
+    <script src="{{ url_for('static', filename = 'jquery/jquery.js') }}"></script>
+{% endblock %}
+{% block body %}
+    <!--first section is the leading title part-->
+    <section class="bg-primary bg-gradient shadow">
+        <div class="container p-5">
+            <!--using grid to place the elements-->
+            <div class="row align-items-center justify-content-between">
+                <!--using cols-->
+                <div class="col-md">
+                    <img src="../static/Resource/电话取货.svg" class="img-fluid w-50">
+                </div>
+                <div class="col-md p-5"><!--padding-->
+                    <h2 class="text-light">View Your Shopping Cart</h2>
+                    <p class="lead text-light fs-4"><!--light text with lead font-->
+                        You are able to view your shopping cart here. Editions to the items are allowed.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <!--this section is used to present the Order list-->
+    </section>
+    <section class="p-6 m-5"><!--padding+margin-->
+        <div class="container ">
+            <h1 class="text-center lead">My Order List</h1>
+            <div class="heading-line"></div>
+            <table id="tbody" class="table mt-6 table-striped table-hover align-middle">
+                <!--table, margin top, striped decoration, hover table and item aligned middle-->
+                <!--table style-->
+                <thead class="thead-dark">
+                <!--table title-->
+                <tr>
+                    <th scope="col">Order ID</th>
+                    <th scope="col">ReceiverID</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Details</th>
+                    <th scope="col">Edition</th>
+                </tr>
+                </thead>
+                <tbody>
+                <!--for loop and Jinjia2 to list the orders, visiting database-->
+                {% for order in orders %}
+                    <!--fill the order id-->
+                    <!--since we need to operate each records, each of the -->
+                    <tr id="tr{{ order.order_id }}">
+                        <td><h4>{{ order.order_id }}</h4></td>
+
+                        <!--Since we have different status for the order, An if statement is used-->
+                        {% if order.status==0 %}
+                            <!--if the order isn't submit yet, a delete record function is provided  -->
+                            <td><h4></h4></td>
+                            <td><h4> waiting for submit </h4></td>
+
+                            <!--a form delivered to the backend with the orderID-->
+                            <td>
+                                <form action="{{ url_for("order.view_my_detail") }}" method="post">
+                                    <input type="hidden" class="form-control" id="order_id" name=order_id
+                                           value="{{ order.order_id }}">
+                                    <button class="btn-primary btn mt-2" type="submit">See Details</button>
+                                </form>
+                            </td>
+                            <!--a delete button used to delete certain cart-->
+                            <td>
+                                <div class="form" method="post">
+                                    <input type="hidden" class="form-control" id="order_id4{{ order.order_id }}"
+                                           name=shopOrder2
+                                           value="{{ order.order_id }}">
+                                    <!--ajax call delete func-->
+                                    <button class="btn-danger btn mt-2" type="submit"
+                                            onclick="bindDeleteButtonClick('{{ order.order_id }}')">Delete
+                                    </button>
+                                </div>
+                            </td>
+                            <!--if the order is created, order details could be viewed-->
+                        {% elif order.status==1 %}
+                            <td><h4></h4></td>
+                            <td><h4> waiting for taking order </h4></td>
+
+                            <!--a form delivered to the backend with the orderID-->
+                            <td>
+                                <form action="{{ url_for("order.view_my_detail") }}" method="post">
+                                    <input type="hidden" class="form-control" id="order_id" name=order_id
+                                           value="{{ order.order_id }}">
+                                    <button class="btn-primary btn mt-2" type="submit">See Details</button>
+                                </form>
+                            </td>
+                            <td>
+                                <div class="form" method="post">
+                                    <!--ajax would be called to view the record-->
+                                    <input type="hidden" class="form-control" id="order_id4{{ order.order_id }}"
+                                           name=shopOrder4
+                                           value="{{ order.order_id }}">
+                                    <!--submit the orderID to the ajax to handle-->
+
+                                </div>
+                            </td>
+                            <!--if the order is released and get by a deliverer, the order need to be received by the user-->
+                        {% elif order.status==2 %}
+                            <td><h4> {{ order.deliverer_id }} </h4></td>
+                            <td><h4> waiting for deliver </h4></td>
+                            <!--a form delivered to the backend with the orderID-->
+                            <td>
+                                <form action="{{ url_for("order.view_my_detail") }}" method="post">
+                                    <input type="hidden" class="form-control" id="order_id" name=order_id
+                                           value="{{ order.order_id }}">
+                                    <button class="btn-primary btn mt-2" type="submit">See Details</button>
+                                </form>
+                            </td>
+                            <td>
+                                <div class="form" method="post">
+                                    <!--ajax would be called to Confirm the receiving-->
+                                    <input type="hidden" class="form-control" id="order_id4{{ order.order_id }}"
+                                           name=shopOrder4
+                                           value="{{ order.order_id }}">
+                                    <!--submit the orderID to the ajax to handle-->
+                                    <button class="btn-primary btn mt-2"  type="submit"
+                                            onclick="bindConfirmButtonClick('{{ order.order_id }}')">Confirm Receiving
+                                    </button>
+                                </div>
+                            </td>
+                            <!--if the order is confirmed by the user, they are able to see the details and delete the record-->
+                        {% elif order.status==3 %}
+                            <td><h4> {{ order.deliverer_id }} </h4></td>
+                            <td><h4> Completed </h4></td>
+                            <!--a form delivered to the backend with the orderID-->
+                            <td>
+                            <!--same as the above-->
+                                <form action="{{ url_for("order.view_my_detail") }}" method="post">
+                                    <input type="hidden" class="form-control" id="order_id" name=order_id
+                                           value="{{ order.order_id }}">
+                                    <button class="btn-primary btn mt-2" type="submit">See Details</button>
+                                </form>
+                            </td>
+                            <td>
+                                <div class="form" method="post">
+                                    <!--ajax would be called to delete the record-->
+                                    <input type="hidden" class="form-control" id="order_id4{{ order.order_id }}"
+                                           name=shopOrder4
+                                           value="{{ order.order_id }}">
+                                    <!--submit the orderID to the ajax to handle-->
+                                    <button class="btn-danger btn mt-2" type="submit"
+                                            onclick="bindDeleteButtonClick('{{ order.order_id }}')">Delete
+                                    </button>
+                                </div>
+                            </td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <script type="text/javascript">
+            function bindDeleteButtonClick(str) {
+                // delete this order
+                var order = $("#" + "order_id4" + str).val();
+                // find the order id
+                $.ajax({
+                    url: "/order/delete",
+                    method: "POST",
+                    data: {
+                        "order_id": order
+                    },
+                    // pass this data to order.py to delete it
+                    success: function (res) {
+                        var code = res['code'];
+                        if (code === 200) {
+                            // if successfully deleted
+                            alert('delete successfully-')
+                            $('#tr' + str).html('');
+                            // update the table
+                        } else {
+                            alert(res['message']);
+                        }
+                    }
+                });
+            }
+
+            function bindConfirmButtonClick(str) {
+                // delete this order
+                var order = $("#" + "order_id4" + str).val();
+                // find the order id
+                $.ajax({
+                    url: "/order/confirm",
+                    method: "POST",
+                    data: {
+                        "order_id": order
+                    },
+                    // pass this data to order.py to delete it
+                    success: function (res) {
+                        var code = res['code'];
+                        if (code === 200) {
+                            // if successfully deleted
+                            alert('confirm successfully-')
+                            // update the table
+                            $('#tr2' + str).html('');
+                        } else {
+                            alert(res['message']);
+                        }
+                    }
+                });
+            }
+        </script>
+    </section>
+
+{% endblock %}
+</html>

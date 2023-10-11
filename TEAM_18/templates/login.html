@@ -1,0 +1,50 @@
+{% extends "baseForUserAndUnlogin.html" %}
+
+{% block title %}
+    这是登录页
+{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for("static", filename = "css/bootstrap5.css") }}">
+{% endblock %}
+<!--Here is a user login screen for instance-->
+<!--details would be added in the following development-->
+{% block body %}
+    <div class="row mt-4">
+        <div class="col-sm">
+        </div>
+        <div class="col-sm">
+            <!--start with a form action, link to the database and collect the input info from the front end-->
+            <form action="{{ url_for("user.login") }}" method="post">
+                {% if form %}
+                    {% for i in get_flashed_messages() %}
+                        <p style="color: #0a53be" >{{ i }}</p>
+                    {% endfor %}
+                    {{ from.submit }}
+                {% endif %}
+            <!--form collecting info-->
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Email address</label><!--email address-->
+                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                           name=email>
+                    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
+                        else.</small><!--small notification-->
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Password</label><!--Password-->
+                    <input type="password" class="form-control" id="exampleInputPassword1" name=password>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <div>
+                    {% for message in get_flashed_messages() %}
+                        <div>
+                            <div class="text-danger">{{ message }}</div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </form>
+        </div>
+        <div class="col-sm">
+        </div>
+    </div>
+{% endblock %}

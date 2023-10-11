@@ -1,0 +1,207 @@
+<!--Here is the main page for the people who haven't login/register -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!--Use the css file provided by css-->
+    <link rel="stylesheet" href="{{ url_for("static", filename = "css/bootstrap5.css") }}">
+    <link rel="stylesheet" href="../static/css/BaseTrial.css">
+
+</head>
+<body>
+<nav class="navbar navbar-expand-lg bg-dark navbar-dark text-light fixed-top shadow">
+    <div class="container">
+        <a href="#" class="navbar-brand">Order <span class="text-warning">Anywhere</span></a>
+        <div id="navmenu">
+
+            <ul class="navbar-nav ms-auto nav-menu1">
+                <!--This is the navigation bar for the user view-->
+                <!--Judge whether the user now have loged in our not-->
+                <!--for the item here, I use the nav-item class and nav-link class linking to different pages-->
+                <!--This is the navigation bar for the person who haven't login/register-->
+                <li class="nav-item"><a class="nav-link nav-link1" href="{{ url_for('user.indexForNoLogin') }}">Home</a>
+                </li>
+                <li class="nav-item"><a class="nav-link nav-link1" href="{{ url_for('shop_display.display_all') }}">Shop
+                    List</a></li>
+                <li class="nav-item"><a class="nav-link nav-link1" href="{{ url_for('user.login') }}">Login</a></li>
+                <li class="nav-item"><a class="nav-link nav-link1" href="{{ url_for('user.register') }}">Register</a>
+                </li>
+            </ul>
+            <!--parts for the scale screen, by default it is hidden-->
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        //bind with different elements
+        const hamburger = document.querySelector(".hamburger");
+        const navMenu = document.querySelector(".nav-menu1");
+        //add event listener
+        hamburger.addEventListener("click", mobileMenu);
+
+        function mobileMenu() {
+            //once click, change the status to active
+            hamburger.classList.toggle("active");
+            navMenu.classList.toggle("active");
+        }
+
+        //bind with all the elements with the class nav-link1
+        const navLink = document.querySelectorAll(".nav-link1");
+        //for each of them, once click the item, call the close menu func
+        navLink.forEach(n => n.addEventListener("click", closeMenu));
+
+        function closeMenu() {
+            //remove the active status
+            hamburger.classList.remove("active");
+            navMenu.classList.remove("active");
+        }
+    </script>
+</nav>
+<!--a navbar For the people who haven't login-->
+<!--this part has been integrated into the baseForUserAndUnlogin.html-->
+<!--This section is an overview of the project, with pic and text-->
+<section class="p-5 bg-light text-dark text-sm-start text-center">
+    <div class="container mt-5">
+        <div class="d-flex"> <!--display flex-->
+            <div>
+                <h1>Deliver Anywhere!</h1>
+                <p class="my-5 "><!--margin-top margin-bottom-->
+                <h4>This website is a public Take-out platform which is available for both students and business
+                    merchants.
+                    Students are able to make an order and get the commodities in low price and shipment. Business
+                    merchants can open a shop online and run their own business.</h4>
+                </p>
+                <!--Guide the people to the register page-->
+                <a class=" btn btn-primary btn-large mt-lg-5 p-2" href="{{ url_for('user.login') }}">Order Now!</a>
+            </div>
+            <img src="../static/Resource/上门送货服务.svg" alt="showcase" class="w-25 d-none d-md-block">
+        </div>
+    </div>
+</section>
+
+<!--Brief Intro of the project-->
+<section class="bg-dark">
+    <div class="container">
+        <!--use the grid to construct-->
+        <h1 class="text-center text-light p-5">Why Us?</h1>
+        <div class="row g-4">
+            <div class="col-md">
+                <!--each item is a card-->
+                <div class="card">
+                    <div class="card-body">
+                        <img src="../static/Resource/配送快递服务.svg" class="card-img-top img-fluid">
+                        <div class="card-title mt-2"><!--margin top-->
+                            <h3 class="text-center">Fast Delivery</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="card">
+                    <div class="card-body">
+                        <img src="../static/Resource/商品促销.svg" class="card-img-top img-fluid">
+                        <div class="card-title mt-2">
+                            <h3 class="text-center">Low Prices</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="card">
+                    <div class="card-body">
+                        <img src="../static/Resource/移动购物.svg" class="card-img-top img-fluid">
+                        <div class="card-title mt-2">
+                            <h3 class="text-center">Convenient Usage</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--This part could lead to register page for user-->
+<section class="p-5 bg-dark">
+    <div class="container" id="register">
+        <div class="row align-items-center justify-content-between">
+            <div class="col-md">
+                <img src="../static/Resource/购物车空空如也.svg" class="img-fluid w-75"><!--100% width auto height-->
+            </div>
+            <div class="col-md p-5 text-light">
+                <h2>Register as a user</h2>
+                <p class="lead mt-4">
+                    Doesn't have an item yet? Want to make an order easily? Click here and have a quick start.
+                </p>
+                <!--direct to the register page-->
+                <a href="{{ url_for('user.register') }}" class="btn btn-light my-5">Register a User account</a>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<!--for the people who intend to create a shop-->
+<section class="p-5">
+    <div class="container">
+        <div class="row align-items-center justify-content-between">
+            <div class="col-md">
+                <img src="../static/Resource/电话取货.svg" class="img-fluid"><!--100% width auto height-->
+            </div>
+            <div class="col-md p-5">
+                <h2>Have your own shop online?</h2>
+                <p class="lead">
+                    Want to have your own shop immediately? Run your own business on our platform!Click here and
+                    have a quick start.
+                </p>
+                <!--direct to the registerPage for the merchants-->
+                <a href="{{ url_for('merchant.register') }}" class="btn btn-dark my-5">Merchants login</a>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!--For the people who intend to be a deliverer-->
+<!--It is important to notice that being a deliverer should be a user first-->
+<section class="p-5 bg-dark text-light">
+    <div class="container ">
+        <div class="row align-items-center justify-content-between">
+
+            <div class="col-md p-5">
+                <h2>Make pocket money on campus?</h2>
+                <p class="lead">
+                    An opprotunity is provided for the students who would like to be a deliverer using their leisure
+                    time to make some pocket money.
+                    Register here and join us.
+                </p>
+                <a href="{{ url_for('user.deliverer_login') }}" class="btn btn-light text-dark">Register here</a>
+            </div>
+            <div class="col-md">
+                <img src="../static/Resource/快递送货.svg" class="img-fluid"><!--100% width auto height-->
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<footer class=" p-3 bg-light text-dark text-center">
+    <div class="container">
+        <p class="lead">Developed by Bowen Zhang, Haiyi Jin</p>
+    </div>
+</footer>
+
+<script>
+    function onTopClick() {
+        window.location.hash = "#register";
+    }
+</script>
+</body>
+</html>

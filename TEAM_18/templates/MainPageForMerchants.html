@@ -1,0 +1,113 @@
+{% extends "baseForMerchants.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../static/css/bootstrap5.css">
+
+</head>
+{% block body %}
+    <section class="p-5 bg-success">
+        <div class="jumbotron text-light">
+            <h1 class="display-4">Welcome Back! <span class="text-info">{{ g.merchant.merchants_name }}</span></h1>
+            <p class="lead">Welcome back to the shop management system, manage your own shop and recieve orders here.
+                Wish you a good luck</p>
+            <hr class="my-4">
+            <!-- <p>It uses utility classes for typography and spacing to space content out within the larger container.</p> -->
+            <a class="btn btn-primary btn-lg" href="#" role="button">Manage My Shop</a>
+        </div>
+    </section>
+
+    <section class="p-5">
+        <div class="container">
+            <!--Here is to limit the number of card presenting in a line. Four cards are allowed in a single line-->
+            <h2 class="text-dark">My Shops</h2>
+            <div class="row row-cols-1 row-cols-md-4">
+                <!--use the variable 'shops' delivered from the backend and iterate through the shop-->
+                {% if merchant.shop %}
+                    {% for shop in merchant.shop %}
+                        <div class="col mb-4">
+                            <div class="card text-center">
+                                <img src="../static/Resource/06商品.png" class="card-img-top" alt="...">
+                                <div class="card-body">
+                                    <!--In the iteration, post the name, location, merchants name to the card-->
+                                    <h5 class="card-title text-center">{{ shop.shop_name }}</h5>
+                                    <h6 class="card-subtitle text-center">{{ shop.shop_location }}</h6>
+                                    <p class="card-text"> {{ shop.merchant.merchants_name }}</p>
+                                    <!--For each card, provide each card with a button to see the details of the shop.
+                                    The hidden input records the shopID and could be delivered to the detail page to view the details of certain shop-->
+                                    <!--using the form, We post the id of the certain shop to the next page-->
+                                    <form action="{{ url_for("shop_display.display_commodities") }}" method="post">
+                                        <input type="hidden" class="form-control" id="shop_id" name=shop_id
+                                               value="{{ shop.shop_id }}">
+                                        <button class="btn-primary btn mt-2" type="submit">See in details</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="col mb-4">
+                        <div class="card text-center">
+                            <img src="../static/Resource/E-Commerce%2002.svg" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <!--In the iteration, post the name, location, merchants name to the card-->
+                                <h5 class="card-title text-center">Add New Shop Here</h5>
+                                <h6 class="card-subtitle text-center">add more shops here</h6>
+                                <p class="card-text">Add more details here</p>
+
+                                <form action="{{ url_for("merchant.register_shop") }}" method="get">
+                                    <input type="hidden" class="form-control" id="shop_id" name=shop_id
+                                           value="{{ merchant.shop.shop_id }}">
+                                    <button class="btn-primary btn mt-2" type="submit"
+                                            href="{{ url_for('merchant.register_shop') }}">Add Shop
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+    <!--here is the popular commodity of the shop, the function is still implementing, we use all the items instead for instance-->
+    <section class="p-5 bg-info">
+        <div class="container">
+            <h2 class="text-light text-center mb-3">My Commodities</h2>
+            <div class="row row-cols-1 row-cols-md-4">
+                <!--Jinja2 iterate the commodities-->
+                {% for shop in merchant.shop %}
+                    {% for commodity in shop.commodities %}
+                        <!--card presenting-->
+                        <div class="card border-primary mb-3 ms-2 " style="max-width: 540px;">
+                            <div class="row no-gutters">
+                                <div class="col-md-4">
+                                    <img src="../static/Resource/sakana.png" class="w-75 img-fluid" alt="...">
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ commodity.commodity_name }}</h5>
+                                        <p class="card-text">{{ commodity.commodity_price }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    {% endfor %}
+                {% endfor %}
+
+
+            </div>
+        </div>
+    </section>
+
+
+    </div>
+    </section>
+
+
+{% endblock body %}
+</html>

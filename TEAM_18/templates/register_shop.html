@@ -1,0 +1,47 @@
+<!--This is the old one. Already migrate to new pages (shopAdded)-->
+
+
+
+
+{##}
+{#{% block title %}#}
+{#    register for shop#}
+{#{% endblock %}#}
+{##}
+{#{% block head %}#}
+{#    <link rel="stylesheet" href="{{ url_for("static", filename = "css/css.4.6.min.css") }}">#}
+{##}
+{#{% endblock %}#}
+{##}
+{#{% block body %}#}
+{#    <div class="row mt-4">#}
+{#        <div class="col-sm">#}
+{#            One of three columns#}
+{#        </div>#}
+{#        <div class="col-sm">#}
+{#            <form action="{{ url_for("merchant.register_shop") }}" method="post">#}
+{#                <div class="form-group">#}
+{#                    <label for="shop">Shop Name</label>#}
+{#                    <input type="text" class="form-control" id="shop"#}
+{#                           name=shop_name>#}
+{#                </div>#}
+{#                <div class="form-group">#}
+{#                    <label for="shopLo">Shop Location</label>#}
+{#                    <input type="text" class="form-control" id="shopLo" name=shop_location>#}
+{#                </div>#}
+{##}
+{#                <button type="submit" class="btn btn-primary">Submit</button>#}
+{#                <div>#}
+{#                    {% for message in get_flashed_messages() %}#}
+{#                        <div>#}
+{#                            <div class="text-danger">{{ message }}</div>#}
+{#                        </div>#}
+{#                    {% endfor %}#}
+{#                </div>#}
+{#            </form>#}
+{#        </div>#}
+{#        <div class="col-sm">#}
+{#            One of three columns#}
+{#        </div>#}
+{#    </div>#}
+{#{% endblock %}#}

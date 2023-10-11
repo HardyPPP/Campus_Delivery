@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trial1</title>
+    <!--    the base make full use of the css provided by the css and the css created by myself-->
+    <link rel="stylesheet" href="../static/css/bootstrap5.css">
+    <link rel="stylesheet" href="../static/css/style.css">
+    <link rel="stylesheet" href="../static/css/BaseTrial.css">
+    {% block head %}{% endblock %}
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg bg-success navbar-dark text-light shadow fixed-top">
+    <div class="container">
+        <a href="#" class="navbar-brand">Order <span class="text-warning">Anywhere</span></a>
+        <div id="navmenu">
+            <ul class="navbar-nav ms-auto nav-menu1">
+                <!--This is the navigation bar for the user view-->
+                <!--for the item here, I use the nav-item class and nav-link class linking to different pages-->
+                <li class="nav-item"><a class="nav-link nav-link1" href="{{ url_for('merchant.index') }}">My Shops</a></li>
+                <li class="nav-item"><a class="nav-link nav-link1" href="{{ url_for('merchant.add_commodity') }}"> Add
+                    Commodities</a></li>
+                <li class="nav-item"><a class="nav-link nav-link1" href="{{ url_for('merchant.register_shop') }}">Add Shop</a>
+                </li>
+                <li class="nav-item"><a class="nav-link nav-link1" href="{{ url_for('merchant.logout') }}">Log out</a></li>
+                <!--This is the navigation bar for the person who haven't login/register-->
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        //bind with different elements
+        const hamburger = document.querySelector(".hamburger");
+        const navMenu = document.querySelector(".nav-menu1");
+        //add event listener
+        hamburger.addEventListener("click", mobileMenu);
+
+        function mobileMenu() {
+            //once click, change the status to active
+            hamburger.classList.toggle("active");
+            navMenu.classList.toggle("active");
+        }
+        //bind with all the elements with the class nav-link1
+        const navLink = document.querySelectorAll(".nav-link1");
+        //for each of them, once click the item, call the close menu func
+        navLink.forEach(n => n.addEventListener("click", closeMenu));
+        function closeMenu() {
+            //remove the active status
+            hamburger.classList.remove("active");
+            navMenu.classList.remove("active");
+        }
+    </script>
+</nav>
+
+{% block body %}{% endblock body %}
+
+</body>
+</html>

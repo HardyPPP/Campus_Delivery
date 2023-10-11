@@ -1,0 +1,83 @@
+<!--extend base-->
+{% extends "baseForMerchants.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--use customized boostrap css (changes to the success color)-->
+    <link rel="stylesheet" href="../static/MerchantCustomizedCss.css">
+    <title>Document</title>
+    {% block head %}{% endblock head %}
+</head>
+{% block body %}
+    <!--grid layout presenting-->
+    <section class="bg-success bg-gradient shadow">
+        <div class="container p-5">
+            <div class="row align-items-center justify-content-between">
+                <div class="col-md">
+                    <img src="../static/Resource/电话取货.svg" class="img-fluid w-50">
+                </div>
+                <!--grid presenting the title-->
+                <div class="col-md p-5">
+                    <h2 class="text-light">Add your Commodities here</h2>
+                    <p class="lead text-dark fs-3 ">
+                        You are able to add your own commodities here. Commodities name, category, price are required
+                        here.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="p-5"><!--padding-->
+        <div class="container">
+            <!--input group-->
+            <div class="row mt-4">
+                <div class="col-sm">
+                </div>
+                <div class="col-sm">
+                    <!--form used to deliver the info to the backend-->
+                    <form action="{{ url_for("merchant.add_commodity") }}" method="post">
+                        <div class="form-group">
+                            <label for="exampleCommodityName" class="lead my-3">commodity name</label>
+                            <input type="text" class="form-control" placeholder="names here" id="CommodityName"
+                                   name=CommodityName>
+                        </div>
+                        <div class="form-group">
+                            <label for="examplePrice" class="lead my-3">Price</label>
+                            <input type="text" class="form-control" id="Price" placeholder="price" name=Price>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleCategory" class="lead my-3">Category</label>
+                            <input type="text" class="form-control" id="Category" placeholder="category" name=Category>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary mt-4 ms-auto">Submit</button>
+                        {% for i in get_flashed_messages() %}
+                            <p class="text-warning">{{ i }} </p>
+                        {% endfor %}
+                        <div>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-sm">
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="p-5 bg-secondary">
+        <div class="container">
+            <h2 class="text-center">Contact us</h2>
+            <ul class="list-group list-group-flush"><!--use the list group to list the item here-->
+                <li class="list-group-item bg-secondary">Phone Number:15811537702</li>
+                <li class="list-group-item bg-secondary">Email:Hanyi.Jin@ucdconnect.ie</li>
+            </ul>
+
+        </div>
+    </section>
+
+
+{% endblock body %}
+</html>

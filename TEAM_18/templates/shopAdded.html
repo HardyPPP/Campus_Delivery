@@ -1,0 +1,60 @@
+<!--extends the base-->
+{% extends "baseForMerchants.html" %}
+
+{% block title %}
+    register for shop
+{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" href="../static/CustomizedBootStrap.css">
+
+{% endblock %}
+
+{% block body %}
+    <!--brief intro of this page-->
+<section class="bg-success bg-gra">
+    <div class="container p-5"><!--padding-->
+        <h1 class="text-center text-light">Shop Addition</h1>
+        <p class="lead text-light fs-3">Add your own shops here. Register by providing basic information about the shop and your own identification. After register a shop, you can add your own good to the shop. Information would be secured safely. If you have any problems, please send an email to the developers </p>
+    </div>
+    </section>
+    <section>
+    <!--wave decoration-->
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#198754" fill-opacity="1" d="M0,288L11.4,266.7C22.9,245,46,203,69,181.3C91.4,160,114,160,137,181.3C160,203,183,245,206,261.3C228.6,277,251,267,274,256C297.1,245,320,235,343,224C365.7,213,389,203,411,192C434.3,181,457,171,480,165.3C502.9,160,526,160,549,165.3C571.4,171,594,181,617,192C640,203,663,213,686,224C708.6,235,731,245,754,240C777.1,235,800,213,823,181.3C845.7,149,869,107,891,96C914.3,85,937,107,960,122.7C982.9,139,1006,149,1029,149.3C1051.4,149,1074,139,1097,144C1120,149,1143,171,1166,165.3C1188.6,160,1211,128,1234,101.3C1257.1,75,1280,53,1303,64C1325.7,75,1349,117,1371,133.3C1394.3,149,1417,139,1429,133.3L1440,128L1440,0L1428.6,0C1417.1,0,1394,0,1371,0C1348.6,0,1326,0,1303,0C1280,0,1257,0,1234,0C1211.4,0,1189,0,1166,0C1142.9,0,1120,0,1097,0C1074.3,0,1051,0,1029,0C1005.7,0,983,0,960,0C937.1,0,914,0,891,0C868.6,0,846,0,823,0C800,0,777,0,754,0C731.4,0,709,0,686,0C662.9,0,640,0,617,0C594.3,0,571,0,549,0C525.7,0,503,0,480,0C457.1,0,434,0,411,0C388.6,0,366,0,343,0C320,0,297,0,274,0C251.4,0,229,0,206,0C182.9,0,160,0,137,0C114.3,0,91,0,69,0C45.7,0,23,0,11,0L0,0Z"></path></svg>
+    <!--input group using rows and cols to position-->
+        <div class="row mt-1">
+        <div class="col-sm">
+        </div>
+        <div class="col-sm">
+        <!--form used to send messages to the backend-->
+            <form action="{{ url_for("merchant.register_shop") }}" method="post">
+                <div class="form-group mt-7">
+                    <label for="shop" class="lead mb-4" >Shop Name</label>
+                    <input type="text" placeholder="Please Enter your Shop Name" class="form-control" id="shop_name"
+                        name=shop_name>
+                </div>
+                <div class="form-group mt-7 mb-5">
+                    <label for="shopLo" class="lead mb-4">Shop Location</label>
+                    <input type="text" class="form-control" id="shop_location" name=shop_location placeholder="Enter your shop Location here">
+                </div>
+                <button type="submit" class="btn btn-primary mb-6 ms-11">Submit</button>
+                <div>
+                </div>
+            <!--data validation (alerting messages)-->
+                {% for i in get_flashed_messages() %}
+                    <p class="text-warning">{{ i }} </p>
+                {% endfor %}
+                {{ form.submit }}
+            </form>
+        </div>
+        <div class="col-sm">
+        </div>
+    </div>
+    </section>
+    <!--footer info contains basic info about the developers-->
+    <footer class=" p-3 bg-success text-light text-center">
+        <div class="container">
+            <p class="lead">Developed by Bowen Zhang, Haiyi Jin</p>
+        </div>
+    </footer>
+{% endblock %}

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trial1</title>
+
+    <link rel="stylesheet" href="../templates/FrontEndDevelopment/BootstrapResource/dist/css/bootstrap5.css">
+    <link rel="stylesheet" href="../templates/FrontEndDevelopment/BootstrapResource/dist/css/style.css">
+    {% block head %}{% endblock %}
+</head>
+
+<body>
+<!---->
+    <nav class="navbar navbar-expand-lg bg-dark navbar-dark text-light fixed-top">
+        <div class="container">
+        <a href="#" class="navbar-brand">Order <span class="text-warning">Anywhere</span></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navmenu">
+            <ul class="navbar-nav ms-auto" >
+                <li class="nav-item"><div class="nav-link" ><a href="#" class="text-light text-decoration-none">Home</a></div></li>
+                <li class="nav-item"><div class="nav-link"><a href="#" class="text-light text-decoration-none">Commodities</a></div></li>
+                <li class="nav-item"><div class="nav-link"><a href="#" class="text-light text-decoration-none">Shopping List</a></div></li>
+                <li class="nav-item"><div class="nav-link"><a href="#" class="text-light text-decoration-none">My Profile</a></div></li>
+                <li class="nav-item"><div class="nav-link"><a href="#" class="text-light text-decoration-none">Login/Register</a></div></li>
+            </ul>
+        </div>
+        </div>
+    </nav>
+    <div class="container">
+        {% block body%}{% endblock body %}
+    </div>
+</body>
+</html>

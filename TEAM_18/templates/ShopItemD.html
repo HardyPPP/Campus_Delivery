@@ -1,0 +1,129 @@
+<!--Render the base-->
+{% extends "baseForMerchants.html" %}
+<html>
+<head>
+    {% block head %}
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <!--use the css provided by Bootstrap-->
+        <link rel="stylesheet" href="../static/css/bootstrap5.css">
+        <!--head adoption-->
+
+        <script src="{{ url_for('static', filename = 'jquery/jquery.js') }}"></script>
+        {#        <script src="{{ url_for('static', filename = 'javaScript/addToCart.js') }}"></script>#}
+    {% endblock head %}
+</head>
+<body>
+{% block body %}
+    <!--render the navigation bar from the base-->
+    <!--First section include a picture, an text introduction and a searching form-->
+    <section class="p-5 bg-primary">
+        <div class="container">
+            <div class="row align-items-center justify-content-between">
+                <div class="col-md">
+                    <img src="../static/Resource/电话取货.svg" class="img-fluid w-75">
+                    <!--75% width auto height + responsive design-->
+                </div>
+                <div class="col-md p-5 text-light">
+                    <!--To inform the user of the shop they entered, the shop name would be post here, using the shop variable delivered from the backend-->
+                    <h1>Search in the <span class="text-warning">{{ shop.shop_name }}</span></h1>
+                    <p class="lead">
+                        Search exact item in the shop. Please enter the name of the commodity below. relevant result
+                        would be list here
+                    </p>
+                    <div>
+                        <!--the search function includes an input area with a form to deliver, the function haven't been implemented yet-->
+                        <form method="post" action="#">
+                            <div class="input-group mt-4">
+                                <input type="text" class="form-control" placeholder="Commodity Name">
+                                <button class="btn btn-dark btn-lg" type="submit">Search</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!--This section is the display of the commodities from the shop that user entered-->
+    <section class="p-5 bg-light">
+        <div class="container">
+            <!--four items(card) are allowed the presented in a line-->
+            {% if shop.commodities|length==0 %}
+                <h2 class="lead text-center text-warning">There is No commodities in {{ shop.shop_name }} now</h2>
+            {% endif %}
+            <div class="row row-cols-1 row-cols-md-4">
+                <!--iterate through the commodity in the commodities of the certain shop-->
+
+                {% for commodity in shop.commodities %}
+                    <div class="col mb-4"><!--margin bottom-->
+                        <div class="card bg-dark text-light">
+                            <img src="../static/Resource/sakana.png" class="card-img-top">
+                            <div class="card-body  text-center">
+                                <!--post the name, category and price to each card-->
+                                <div class="card-title">
+                                    {{ commodity.commodity_name }}
+                                </div>
+                                <div class="card-subtitle mt-2"><!--margin top-->
+                                    {{ commodity.category }}
+                                </div>
+                                <div class="card-subtitle mt-2"> <!--margin top-->
+                                    {{ commodity.commodity_price }} $
+                                </div>
+                                <!--An 'a' label but actually a button to add the item into the cart, haven't implemented yet-->
+                                {% if g.user %}
+                                    <div class="form" method="post">
+                                        <input type="hidden" class="form-control commodity_id"
+                                               id="commodity_id{{ commodity.commodity_id }}"
+                                               name=commodity_id
+                                               value="{{ commodity.commodity_id }}">
+                                        <button type="submit" class="btn btn-primary add_to_cart"
+                                                id="add_to_cart{{ commodity.commodity_id }}"
+                                                onclick="bindAddButtonClick('{{ commodity.commodity_id }}')">add
+                                            to cart
+                                        </button>
+                                    </div>
+                                {% endif %}
+
+                            </div>
+                        </div>
+                    </div>
+                    <!--below is just a test for four items in a line. Since we have only got 3 items in the database-->
+                {% endfor %}
+            </div>
+        </div>
+        </div>
+    </section>
+    <script type="text/javascript">
+        function bindAddButtonClick(str) {
+            // add a commodity to the order
+            var commodity = $("#" + "commodity_id" + str).val();
+            // get the commodity id
+            $.ajax({
+                url: "/order/addNewOrder",
+                method: "POST",
+                data: {
+                    "commodity_id": commodity
+                },
+                // pass it to the order.py
+                success: function (res) {
+                    var code = res['code'];
+                    if (code === 200) {
+                        // if successfully added
+                        alert("add successfully");
+                    } else {
+                        alert(res['message']);
+                    }
+                }
+            });
+
+            //});
+        }
+    </script>
+
+
+{% endblock body %}
+</body>
+</html>

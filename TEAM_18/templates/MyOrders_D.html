@@ -1,0 +1,65 @@
+{% extends 'Base_for_Rider.html' %}
+{#extend the base for the deliverer#}
+<!DOCTYPE html>
+<html lang="en">
+{% block head %}
+    <meta charset="UTF-8">
+    <title>My Orders</title>
+    <link rel="stylesheet" href="{{ url_for("static", filename = "css/bootstrap5.css") }}">
+
+{% endblock %}
+{% block body %}
+    {# head of the order page #}
+    <section class="bg-black mt-4">
+{#    background-black + marginTop4#}
+        <div class="container">
+            <!--using grid to place the title-->
+            <div class="row align-items-center justify-content-between">
+                <div class="col-md p-5 lead text-light">
+                    <h1 class="text-center">My Order</h1>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--this section is used to display the order list-->
+    <section class="p-6 m-5"><!--padding6,margin 5-->
+        <div class="container ">
+            <div class="heading-line"></div>
+        <!--using table provided by bootstrap-->
+            <table class="table mt-6 table-striped table-hover align-middle">
+            <!--style of the table-->
+                <thead class="thead-dark">
+                <tr>
+                    <!--title of the table-->
+                    <th scope="col">Order ID</th>
+                    <th scope="col">Receiver ID</th>
+                    <th scope="col">Location</th>
+                    <th scope="col">Status</th>
+                </tr>
+                </thead>
+                <tbody>
+                <!--iterate through the order and place the information into the table respectively-->
+                {% for order1 in order %}
+                    <tr>
+                    <!--get order ID-->
+                        <td><h4>{{ order1.order_id }}</h4></td>
+                    <!--get receiver ID-->
+                        <td><h4>{{ order1.reciever_id }}</h4></td>
+                    <!--get receiver address-->
+                        <td><h4>{{ order1.reciever.student_address }}</h4></td>
+                    <!--Since we use number to store the status, so here we use an if statement to present different status-->
+                        <!--Match Different Condition-->
+                        {% if  order1.status==2 %}
+                            <td><h4>UnCompleted</h4></td>
+                        {% else %}
+                            <td><h4>Completed</h4></td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+{% endblock %}
+</html>

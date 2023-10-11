@@ -1,0 +1,89 @@
+{% extends "baseForUserAndUnlogin.html" %}
+{#this is the register screen for the user,extends the base first#}
+{% block title %}
+
+{% endblock %}
+
+{% block head %}
+    <script src="{{ url_for('static', filename = 'jquery/jquery.js') }}"></script>
+    <script src="{{ url_for('static', filename = 'javaScript/register.js') }}"></script>
+    <link rel="stylesheet" href="../templates/FrontEndDevelopment/BootstrapResource/dist/css/bootstrap5.css">
+    <link rel="stylesheet" href="{{ url_for("static", filename = "css/bootstrap5.css") }}">
+
+{% endblock %}
+
+{% block body %}
+    <!--using grid layout to centralize the position-->
+    <div class="row mt-1 p-5">
+        <div class="col-sm">
+        </div>
+        <div class="col-sm">
+            <h1 class="text-center"> Register as a User</h1>
+        <!--form used to post the user's input to the back end-->
+            <form method="post" action="{{ url_for("user.register") }}">
+            <!--used to alert the warnings and errors-->
+                {% for i in get_flashed_messages() %}
+                    <p class="text-warning">{{ i }}</p>
+                {% endfor %}
+                {{ form.submit }}
+            <!--email address input-->
+                <div class="form-group mt-3">
+                    <label for="exampleInputEmail1">Email address</label>
+                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                           name="email">
+                    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
+                        else.</small>
+                </div>
+            <!--phone Num input-->
+                <div class="form-group mt-3">
+                    <label for="Phone">Phone</label>
+                    <input type="text" class="form-control" id="examplePhone" name="phone_number">
+                </div>
+            <!--location input-->
+                <div class="form-group mt-3">
+                    <label for="Location">Location</label>
+                    <input type="text" class="form-control" id="exampleLocation" name="location">
+                </div>
+            <!--username input-->
+                <div class="form-group mt-3">
+                    <label for="UserName">User Name</label>
+                    <input type="text" class="form-control" id="exampleUserName" name="UserName">
+                </div>
+            <!--student ID input-->
+                <div class="form-group mt-3">
+                    <label for="Student_id">Student_ID</label>
+                    <input type="text" class="form-control" id="exampleUserID" name="student_id">
+                </div>
+            <!--captcha send and confirm-->
+                <div class="form-group mt-3">
+                    <label for="VarifyCode">Captcha</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="varifyCode" aria-describedby="VarifyCode"
+                               name="captcha">
+                        <!--use js to send email captcha-->
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="button" id="captcha_btn">Get captcha
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            <!--password input and password confirm-->
+                <div class="form-group mt-3">
+                    <label for="exampleInputPassword1">Password</label>
+                    <input type="password" class="form-control" id="exampleInputPassword1" name="password">
+                </div>
+                <div class="form-group mt-3">
+                    <label for="exampleInputPassword1">Password Varify</label>
+                    <input type="password" class="form-control" id="exampleInputPassword2" name="passwordV">
+                </div>
+                <center><button type="submit" class="mt-5 btn btn-primary">Submit</button></center>
+
+            </form>
+        </div>
+        <div class="col-sm">
+
+        </div>
+    </div>
+{% endblock %}
+

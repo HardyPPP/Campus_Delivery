@@ -1,0 +1,45 @@
+{% extends "baseForUserAndUnlogin.html" %}
+
+{% block title %}
+    这是登录页
+{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for("static", filename = "css/css.4.6.min.css") }}">
+
+{% endblock %}
+
+{% block body %}
+
+    <div class="row mt-4">
+        <div class="col-sm">
+        </div>
+        <div class="col-sm">
+            <!--To sign up as a deliverer, it should be sign up as an user first. Then they are able to sign up by fill up the information-->
+            <form action="{{ url_for("user.deliverer_login") }}" method="post">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Email address</label><!--email Address-->
+                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                           name=email>
+                    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
+                        else.</small><!--small notification-->
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Password</label><!--password-->
+                    <input type="password" class="form-control" id="exampleInputPassword1" name=password>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <div>
+                    {% for message in get_flashed_messages() %}
+                        <div>
+                            <div class="text-danger">{{ message }}</div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </form>
+        </div>
+        <div class="col-sm">
+
+        </div>
+    </div>
+{% endblock %}

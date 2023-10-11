@@ -1,0 +1,67 @@
+{% extends 'Base_for_Rider.html' %}
+<!--extends base-->
+<!DOCTYPE html>
+<html lang="en">
+{% block head %}
+    <link rel="stylesheet" href="/static/css/bootstrap5.css">
+    <link rel="stylesheet" href="{{ url_for("static", filename = "css/bootstrap5.css") }}">
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+{% endblock %}
+{% block body %}
+<section class="bg-black">
+    <div class="container">
+        <div class="row align-items-center justify-content-between">
+            <div class="col-md p-5 lead text-light">
+                <!--presenting the name of the receiver-->
+                <h1 class="text-center">{{ order.reciever.username }}'s Order Details</h1>
+            </div>
+        </div>
+    </div>
+</section>
+    <!--container for the table-->
+<section class="p-6 m-5">
+    <div class="container ">
+        <div class="heading-line"></div>
+        <table class="table mt-6 table-striped table-hover align-middle">
+            <thead class="thead-dark">
+            <tr>
+                <!--title of the table-->
+                <th scope="col">Order ID</th>
+                <th scope="col">Item Name</th>
+                <th scope="col">Shop</th>
+                <th scope="col">Price</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!--iterate the details and use jinja placing the info to the table-->
+            {% for detail in order.detail %}
+                <tr id="tr2{{ detail.detail_id }}">
+                    <td><h4>{{ detail.order_id }}</h4></td>
+                    <td><h4>{{ detail.commodity.commodity_name }}</h4></td>
+                    <td><h4>{{ detail.commodity.shop.shop_name }}</h4></td>
+                    <td><h4>{{ detail.commodity.commodity_price }}$</h4></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+<!--if the order is released and haven't been fetched,accept button is provided-->
+    {% if order.status==1 %}
+        <section>
+            <div class="container">
+                <form action="{{ url_for("order.accept") }}" method="post">
+                    <!--each of them has unique id-->
+                    <input type="hidden" class="form-control" id="order_id2{{ order.order_id }}" name=order_id
+                           value="{{ order.order_id }}">
+                    <button class="btn-primary btn mt-2" style="float: right" type="submit"
+                            onclick="">Accept
+                    </button>
+                </form>
+            </div>
+        </section>
+    {% endif %}
+</section>
+{% endblock %}
+</html>

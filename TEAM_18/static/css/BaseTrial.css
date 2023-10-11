@@ -1,0 +1,103 @@
+/*this is the css file that aims to control the navBar*/
+.header1{
+    /*define the distance and the style of the border-bottom*/
+    border-bottom: 1px solid #32f3cb;
+}
+
+.navbar1 {
+    /*set flex display mode and color*/
+    display: flex;
+    background-color: #2096f1;
+    justify-content: space-between;
+    /*set content to the center and define the padding distance */
+    align-items: center;
+    padding: 0.6rem 1rem;
+}
+/*by default, set the hamburger to invisible*/
+.hamburger {
+    display: none;
+}
+.bar {
+    /*gather the bar together using the block*/
+    display: block;
+    /*set basic height and width*/
+    width: 25px;
+    height: 3px;
+    margin: 5px auto;
+    /*allow property changes in CSS values to occur smoothly over a specified duration*/
+    /*all the elements finish the anim in 0.3 seconds, from slow to quick then slow down*/
+    -webkit-transition: all 0.3s ease-in-out;
+    /*match with the above*/
+    transition: all 0.3s ease-in-out;
+    background-color: #101010;
+}
+.nav-menu1 {
+    /*justify the display*/
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-item1 {
+    /*define the margin distance*/
+    margin-top: 1rem;
+    margin-left: 3rem;
+}
+
+.nav-link1{
+    /*define font color, size and weight without decorations*/
+    font-size: 1rem;
+    font-weight: 500;
+    color: #f4f4f5;
+    text-decoration: none;
+}
+
+.nav-link1:hover{
+    /*the hover color when the mouse moves around*/
+    color: #482ff7;
+}
+/*scale screen, change the items css according to the width of the screen*/
+@media only screen and (max-width: 800px) {
+    /*the container of the dropdown navBar*/
+    .nav-menu1 {
+        /*set position, size, width and border*/
+        position: fixed;
+        left: -120%;
+        top: 3.4rem;
+        flex-direction: column;
+        background-color: #5bd9d9;
+        width: 100%;
+        border-radius: 10px;
+        text-align: center;
+        transition: 0.3s;
+        box-shadow:
+            0 10px 27px rgba(0, 0, 0, 0.05);
+    }
+    /*define once the status of the nav-menu1 is active*/
+    .nav-menu1.active {
+        left: 0;
+    }
+    /*define margin distance of the nav-item*/
+    .nav-item {
+        margin: 2rem 0;
+    }
+    /*set the hamburger visible in the block view and set pointer*/
+    .hamburger {
+        display: block;
+        cursor: pointer;
+    }
+
+    /*three bar available, set the second one invisible*/
+    .hamburger.active .bar:nth-child(2) {
+        opacity: 0;
+    }
+    /*to form up a new shape, two bars need to be rotated*/
+    /*rotate the first one in certain degree*/
+    .hamburger.active .bar:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+    }
+    /*rotate the third one in certain degree*/
+    .hamburger.active .bar:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg);
+    }
+}

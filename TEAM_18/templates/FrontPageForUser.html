@@ -1,0 +1,216 @@
+{% extends 'baseForUserAndUnlogin.html' %}
+<!DOCTYPE html>
+<html lang="en">
+{% block head %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trial1</title>
+{% endblock %}
+<!--This is the homepage for the user-->
+{% block body %}
+    <!--To begin with, is a navigation bar for the user-->
+    <!--It should be marked that this navigation codes have been integrated into the baseForUserAndUnlogin.html -->
+    <!--brief introduction of the application-->
+    <section class="pt-11 bg-primary bg-gradient text-light text-center text-sm-start"> <!--padding-->
+        <div class="container">
+            <div class="d-flex"> <!--display flex-->
+                <div>
+                    <!--get info from the session, display the name of the user-->
+                    {% if g.user %}
+                        <h1><span class="text-info">Hi </span>{{ g.user.username }}</h1>
+                    {% else %}
+                        <h1><span class="text-info">Hi </span>{{ g.userD.username }}</h1>
+                    {% endif %}
+                    <h1><span class="text-warning">Make an Order</span> Now?</h1>
+                    <p class="my-4"><!--margin-top margin-bottom-->
+                        This website is a public Take-out platform which is available for both students and business
+                        merchants.
+                        Students are able to make an order and get the commodities in low price and shipment. Business
+                        merchants can open a shop online and run their own business.
+                    </p>
+                    <button class="btn-primary btn-large btn bg-light text-dark mt-6" href="#">Order Now!</button>
+                    <!--link to the commodities list which is still constructing-->
+                </div>
+                <img src="../static/Resource/外卖小哥.svg" alt="showcase" class="w-25 d-none d-md-block">
+            </div>
+        </div>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+            <path fill="#fff" fill-opacity="1"
+                  d="M0,32L11.4,58.7C22.9,85,46,139,69,144C91.4,149,114,107,137,101.3C160,96,183,128,206,149.3C228.6,171,251,181,274,176C297.1,171,320,149,343,133.3C365.7,117,389,107,411,117.3C434.3,128,457,160,480,165.3C502.9,171,526,149,549,154.7C571.4,160,594,192,617,181.3C640,171,663,117,686,85.3C708.6,53,731,43,754,80C777.1,117,800,203,823,218.7C845.7,235,869,181,891,144C914.3,107,937,85,960,112C982.9,139,1006,213,1029,208C1051.4,203,1074,117,1097,85.3C1120,53,1143,75,1166,96C1188.6,117,1211,139,1234,149.3C1257.1,160,1280,160,1303,160C1325.7,160,1349,160,1371,154.7C1394.3,149,1417,139,1429,133.3L1440,128L1440,320L1428.6,320C1417.1,320,1394,320,1371,320C1348.6,320,1326,320,1303,320C1280,320,1257,320,1234,320C1211.4,320,1189,320,1166,320C1142.9,320,1120,320,1097,320C1074.3,320,1051,320,1029,320C1005.7,320,983,320,960,320C937.1,320,914,320,891,320C868.6,320,846,320,823,320C800,320,777,320,754,320C731.4,320,709,320,686,320C662.9,320,640,320,617,320C594.3,320,571,320,549,320C525.7,320,503,320,480,320C457.1,320,434,320,411,320C388.6,320,366,320,343,320C320,320,297,320,274,320C251.4,320,229,320,206,320C182.9,320,160,320,137,320C114.3,320,91,320,69,320C45.7,320,23,320,11,320L0,320Z"></path>
+        </svg>
+    </section>
+    <!--This part is used to search for certain items in the commodities still constructing-->
+    <!--This part is a hot seller list, presenting the items that is popular-->
+    <section class="p-5">
+        <div class="container">
+            <div class="mb-3">
+                <h3>Hot seller list</h3>
+            </div>
+            <!--using the grid to construct the overall layout-->
+            <div class="row g-4"> <!--gap-4-->
+                <div class="col-md">
+                    <!--using card to present-->
+                    <div class="card bg-light">
+                        <img src="../static/Resource/sakana.png" class="card-img-top">
+                        <div class="card-body  text-center">
+                            <div class="card-title">
+                                <!--Here, the items are currently static, it would be dynamic in the following development-->
+                                Card1
+                            </div>
+                            <div class="card-text mt-2"> <!--margin top-->
+                                electus voluptates placeat quo eius quae eaque sequi reiciendis incidunt animi. Maiores,
+                                facilis.
+                            </div>
+                            <a href="#" class="btn btn-primary">Buy Now!</a><!--still constructing -->
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md">
+                    <!--same as top-->
+                    <div class="card bg-secondary text-light">
+                        <img src="../static/Resource/sakana.png" class="card-img-top img-fluid ">
+                        <div class="card-body  text-center">
+                            <div class="card-title">
+                                Card2
+                            </div>
+                            <div class="card-text mt-2">
+                                electus voluptates placeat quo eius quae eaque sequi reiciendis incidunt animi. Maiores,
+                                facilis.
+                            </div>
+                            <a href="#" class="btn btn-dark">Buy Now!</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md">
+                    <!--same as top-->
+                    <div class="card bg-dark text-light">
+                        <img src="../static/Resource/chisato.png" class="card-img-top img-fluid ">
+                        <div class="card-body  text-center">
+                            <div class="card-title">
+                                Card3
+                            </div>
+                            <div class="card-text mt-2">
+                                electus voluptates placeat quo eius quae eaque sequi reiciendis incidunt animi. Maiores,
+                                facilis.
+                            </div>
+                            <a href="#" class="btn btn-primary">Buy Now!</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!--this section allows the user to register as a business user-->
+    <section class=" bg-dark">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+            <path fill="#fff" fill-opacity="1"
+                  d="M0,32L11.4,64C22.9,96,46,160,69,181.3C91.4,203,114,181,137,149.3C160,117,183,75,206,58.7C228.6,43,251,53,274,53.3C297.1,53,320,43,343,37.3C365.7,32,389,32,411,74.7C434.3,117,457,203,480,218.7C502.9,235,526,181,549,186.7C571.4,192,594,256,617,240C640,224,663,128,686,112C708.6,96,731,160,754,160C777.1,160,800,96,823,58.7C845.7,21,869,11,891,26.7C914.3,43,937,85,960,85.3C982.9,85,1006,43,1029,53.3C1051.4,64,1074,128,1097,154.7C1120,181,1143,171,1166,149.3C1188.6,128,1211,96,1234,69.3C1257.1,43,1280,21,1303,32C1325.7,43,1349,85,1371,122.7C1394.3,160,1417,192,1429,208L1440,224L1440,0L1428.6,0C1417.1,0,1394,0,1371,0C1348.6,0,1326,0,1303,0C1280,0,1257,0,1234,0C1211.4,0,1189,0,1166,0C1142.9,0,1120,0,1097,0C1074.3,0,1051,0,1029,0C1005.7,0,983,0,960,0C937.1,0,914,0,891,0C868.6,0,846,0,823,0C800,0,777,0,754,0C731.4,0,709,0,686,0C662.9,0,640,0,617,0C594.3,0,571,0,549,0C525.7,0,503,0,480,0C457.1,0,434,0,411,0C388.6,0,366,0,343,0C320,0,297,0,274,0C251.4,0,229,0,206,0C182.9,0,160,0,137,0C114.3,0,91,0,69,0C45.7,0,23,0,11,0L0,0Z"></path>
+        </svg>
+
+        <div class="container">
+            <div class="row align-items-center justify-content-between">
+                <div class="col-md">
+                    <img src="../static/Resource/电话取货.svg" class="img-fluid"><!--100% width auto height-->
+                </div>
+                <div class="col-md p-5">
+                    <h2 class="text-light">Have your own shop online?</h2>
+                    <p class="lead text-light">
+                        Want to have your own shop immediately? Run your own business on our platform!Click here and
+                        have a
+                        quick start.
+                    </p>
+
+                    <a href="#" onclick="alert('log out first please')" class="btn btn-primary">Merchants Login</a>
+                    <!--direct to the register page for the merchant-->
+
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <!--This section allows user to become a deliverer-->
+
+    <section class="bg-dark text-light">
+        <div class="container ">
+            <div class="row align-items-center justify-content-between">
+                <div class="col-md p-5">
+                    <h2>Make pocket money on campus?</h2>
+                    <p class="lead">
+                        An opprotunity is provided for the students who would like to be a deliverer using their leisure
+                        time to make some pocket money.
+                        Register here and join us.
+                    </p>
+                    <form method="post" action="{{ url_for("user.become_deliverer") }}">
+                        <button type="submit" class="btn btn-light text-dark">Register here
+                        </button>
+                    </form>
+                    <!--direct to the register of diliverer-->
+                </div>
+                <div class="col-md">
+                    <img src="../static/Resource/上门送货服务.svg" class="img-fluid"><!--100% width auto height-->
+                </div>
+            </div>
+        </div>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+            <path fill="#fff" fill-opacity="1"
+                  d="M0,0L11.4,5.3C22.9,11,46,21,69,58.7C91.4,96,114,160,137,165.3C160,171,183,117,206,117.3C228.6,117,251,171,274,170.7C297.1,171,320,117,343,112C365.7,107,389,149,411,160C434.3,171,457,149,480,133.3C502.9,117,526,107,549,96C571.4,85,594,75,617,80C640,85,663,107,686,112C708.6,117,731,107,754,122.7C777.1,139,800,181,823,186.7C845.7,192,869,160,891,138.7C914.3,117,937,107,960,101.3C982.9,96,1006,96,1029,122.7C1051.4,149,1074,203,1097,213.3C1120,224,1143,192,1166,154.7C1188.6,117,1211,75,1234,58.7C1257.1,43,1280,53,1303,96C1325.7,139,1349,213,1371,218.7C1394.3,224,1417,160,1429,128L1440,96L1440,320L1428.6,320C1417.1,320,1394,320,1371,320C1348.6,320,1326,320,1303,320C1280,320,1257,320,1234,320C1211.4,320,1189,320,1166,320C1142.9,320,1120,320,1097,320C1074.3,320,1051,320,1029,320C1005.7,320,983,320,960,320C937.1,320,914,320,891,320C868.6,320,846,320,823,320C800,320,777,320,754,320C731.4,320,709,320,686,320C662.9,320,640,320,617,320C594.3,320,571,320,549,320C525.7,320,503,320,480,320C457.1,320,434,320,411,320C388.6,320,366,320,343,320C320,320,297,320,274,320C251.4,320,229,320,206,320C182.9,320,160,320,137,320C114.3,320,91,320,69,320C45.7,320,23,320,11,320L0,320Z"></path>
+        </svg>
+
+    </section>
+    <!--brief intro of the developing team-->
+    <section>
+        <div class="container">
+            <h2 class="text-center text-dark">Team member</h2>
+            <div class="heading-line"></div>
+            <p class="lead text-center text-dark mb-5">A brief introduction of our team. Our team is formed up by 2
+                students from BDIC<br> The task allocation is mainly by seperating the whole project into the front-end
+                development and back-end development
+            <p>
+                <!--still use the grid layout-->
+            <div class="row g-4">
+                <div class="col">
+                    <div class="card bg-light">
+                        <div class="card-body text-center">
+                            <img src="../static/Resource/雪人2.svg" class="mb-3">
+                            <h3 class="card-title">Hardy Prime</h3>
+                            <p class="card-text">Mainly in charge of the back-end development</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card bg-light">
+                        <div class="card-body text-center">
+                            <img src="../static/Resource/雪人2.svg" class="mb-3">
+                            <h3 class="card-title">Bowen Zhang</h3>
+                            <p class="card-text">Mainly in charge of the front-end development</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--connection-->
+    <section class="p-5">
+        <div class="container">
+            <h2 class="text-center">Contact us</h2>
+            <ul class="list-group list-group-flush"><!--use the list group to list the item here-->
+                <li class="list-group-item">Phone Number:15811537702</li>
+                <li class="list-group-item">Email:Hanyi.Jin@ucdconnect.ie</li>
+            </ul>
+        </div>
+    </section>
+
+    <!--brief footer of the developers-->
+
+    <footer class=" p-5 bg-dark text-light text-center">
+        <div class="container">
+            <p class="lead">Developed by Bowen Zhang, Haiyi Jin</p>
+        </div>
+    </footer>
+
+
+{% endblock %}
+</html>

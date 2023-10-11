@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html id="BaseHTML" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../static/css/BaseTrial.css">
+
+    {% block head %}{% endblock %}
+</head>
+<body>
+<nav class="navbar navbar-expand-lg bg-success navbar-dark text-light shadow fixed-top">
+    <div class="container">
+        <a href="#" class="navbar-brand">Order <span class="text-warning">Anywhere</span></a>
+        <div id="navmenu">
+            <ul class="navbar-nav ms-auto nav-menu1">
+                <!--This is the navigation bar for the user view-->
+                <!--for the item here, I use the nav-item class and nav-link class linking to different pages-->
+                <li class="nav-item"><a class="nav-link nav-link1" href="{{ url_for('order.all_order') }}">Order
+                    Release</a></li>
+                <li class="nav-item"><a class="nav-link nav-link1" href="{{ url_for('order.all_myD_order') }}"> My Orders</a></li>
+                </li>
+                <li class="nav-item"><a class="nav-link nav-link1" href="{{ url_for('user.logout') }}">Log out</a>
+                </li>
+                <!--This is the navigation bar for the person who haven't login/register-->
+            </ul>
+            <!--a hidden hamburger bar for the scale screen-->
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        //bind with items
+        const hamburger = document.querySelector(".hamburger");
+        const navMenu = document.querySelector(".nav-menu1");
+        //add click event, call function
+        hamburger.addEventListener("click", mobileMenu);
+
+        function mobileMenu() {
+            //change the status of the selected items,to active
+            hamburger.classList.toggle("active");
+            navMenu.classList.toggle("active");
+        }
+        //bind with the items with the same class name and add each of them the click event
+        const navLink = document.querySelectorAll(".nav-link1");
+        //call the func
+        navLink.forEach(n => n.addEventListener("click", closeMenu));
+
+        function closeMenu() {
+            //remove active status
+            hamburger.classList.remove("active");
+            navMenu.classList.remove("active");
+        }
+    </script>
+</nav>
+
+{% block body %}{% endblock %}
+</body>
+</html>

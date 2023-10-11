@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trial1</title>
+    <!--    the base make full use of the css provided by the css and the css created by myself-->
+    <link rel="stylesheet" href="../static/css/style.css">
+    <link rel="stylesheet" href="../static/CustomizedBootStrap.css">
+    <link rel="stylesheet" href="../static/css/BaseTrial.css">
+    {% block head %}{% endblock %}
+</head>
+
+<body>
+{% if user %}
+    <nav class="navbar navbar-expand-lg bg-primary bg-gradient navbar-dark shadow text-light fixed-top">
+    <!--mark the style and fix the navigation at the top-->
+    <div class="container">
+        <a href="#" class="navbar-brand">Order <span class="text-warning">Anywhere</span></a>
+        <div id="navmenu">
+            <ul class="navbar-nav ms-auto nav-menu1">
+                <li class="nav-item"><a class="nav-link nav-link1" href="{{ url_for('user.index') }}">Home</a></li>
+                <!--link to the frontpage for the user-->
+                <li class="nav-item"><a class="nav-link nav-link1" href="{{ url_for('shop_display.display_all') }}">Shop List</a>
+                </li><!--link to all the shops-->
+                <li class="nav-item"><a class="nav-link nav-link1" href="{{ url_for("order.show_my_order") }}">Shopping Cart</a>
+                </li>
+                <li class="nav-item"><a class="nav-link nav-link1" href="{{ url_for('user.logout') }}">Log out</a></li>
+                <li class="nav-item"><a class="nav-link nav-link1" href="{{ url_for('user.clear_database') }}">Clear Database</a></li>
+                <!--log out function-->
+            </ul>
+            <!--a hidden menu for scale screen -->
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        //bind with different elements
+        const hamburger = document.querySelector(".hamburger");
+        const navMenu = document.querySelector(".nav-menu1");
+        //add event listener
+        hamburger.addEventListener("click", mobileMenu);
+
+        function mobileMenu() {
+            //once click, change the status to active
+            hamburger.classList.toggle("active");
+            navMenu.classList.toggle("active");
+        }
+        //bind with all the elements with the class nav-link1
+        const navLink = document.querySelectorAll(".nav-link1");
+        //for each of them, once click the item, call the close menu func
+        navLink.forEach(n => n.addEventListener("click", closeMenu));
+        function closeMenu() {
+            //remove the active status
+            hamburger.classList.remove("active");
+            navMenu.classList.remove("active");
+        }
+    </script>
+</nav>
+
+{% else %}
+    <nav class="navbar navbar-expand-lg bg-dark navbar-dark text-light fixed-top shadow">
+        <div class="container">
+            <a href="#" class="navbar-brand">Order <span class="text-warning">Anywhere</span></a>
+            <div  id="navmenu">
+
+                <ul class="navbar-nav ms-auto nav-menu1">
+                    <!--This is the navigation bar for the user view-->
+                    <!--Judge whether the user now have logged in our not-->
+                    <!--for the item here, I use the nav-item class and nav-link class linking to different pages-->
+                    <!--This is the navigation bar for the person who haven't login/register-->
+                    <li class="nav-item"><a class="nav-link nav-link1" href="{{ url_for('user.indexForNoLogin') }}">Home</a></li>
+                    <li class="nav-item"><a class="nav-link nav-link1" href="{{ url_for('shop_display.display_all') }}">Shop
+                        List</a></li>
+                    <li class="nav-item"><a class="nav-link nav-link1" href="{{ url_for('user.login') }}">Login</a></li>
+                    <li class="nav-item"><a class="nav-link nav-link1" href="{{ url_for('user.register') }}">Register</a></li>
+
+                </ul>
+                <div class="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript">
+            const hamburger = document.querySelector(".hamburger");
+            const navMenu = document.querySelector(".nav-menu1");
+            hamburger.addEventListener("click", mobileMenu);
+
+            function mobileMenu() {
+                hamburger.classList.toggle("active");
+                navMenu.classList.toggle("active");
+            }
+
+            const navLink = document.querySelectorAll(".nav-link1");
+            navLink.forEach(n => n.addEventListener("click", closeMenu));
+
+            function closeMenu() {
+                hamburger.classList.remove("active");
+                navMenu.classList.remove("active");
+            }
+        </script>
+    </nav>
+{% endif %}
+{% block body %}{% endblock body %}
+
+</body>
+</html>

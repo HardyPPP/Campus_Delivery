@@ -1,0 +1,17 @@
+import os
+basedir = os.path.abspath(os.path.dirname(__file__))
+JSON_AS_ASCII = False
+HOSTNAME = '127.0.0.1'
+PORT = '3306'
+SECRET_KEY = '123456'
+MAIL_SERVER = "smtp.qq.com"
+MAIL_PORT = 465
+MAIL_USE_TLS = False
+MAIL_USE_SSL = True
+MAIL_DEBUG = True
+MAIL_USERNAME = "hardyprime@qq.com"
+MAIL_PASSWORD = "ibnjttvugauhbecd"
+MAIL_DEFAULT_SENDER = "hardyprime@qq.com"
+SECRET_KEY = os.environ.get('SECRET_KEY') or 'you-will-never-guess'
+SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or'sqlite:///' + os.path.join(basedir, 'blogdb.db')
+SQLALCHEMY_TRACK_MODIFICATIONS = False

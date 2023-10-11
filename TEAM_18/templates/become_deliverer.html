@@ -1,0 +1,27 @@
+<!--base rendering-->
+{% extends "baseForUserandUnlogin.html" %}
+<!--extends the base-->
+{% block title %}
+    这是注册页
+{% endblock %}
+
+{% block head %}
+    <script src="{{ url_for('static', filename = 'jquery/jquery.js') }}"></script>
+    <script src="{{ url_for('static', filename = 'javaScript/register.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for("static", filename = "css/css.4.6.min.css") }}">
+
+{% endblock %}
+
+{% block body %}
+    <div class="row mt-4">
+        <div class="col-sm">
+        </div>
+        <div class="col-sm">
+            <form method="post" action="{{ url_for("user.become_deliverer") }}">
+                <button type="submit" class="btn btn-primary">become deliverer</button>
+            </form>
+        </div>
+        <div class="col-sm">
+        </div>
+    </div>
+{% endblock %}
